@@ -15,17 +15,17 @@ def blueribbon_crawling():
     # 블루리본 서베이 레스토랑 API 베이스 링크 (Base link)
     base_link = "https://www.bluer.co.kr/api/v1/restaurants"
 
-    response = requests.get(base_link)
+    response = requests.get(base_link, timeout=10)
     json_contents = response.json()
 
     for i in trange(json_contents['page']['totalPages']):
         needed_url = base_link + f"?page={i}"
         # 지정된 링크에서 json 형태로 내용 가져오기 (Getting contents as json format from link)
-        response = requests.get(needed_url)
+        response = requests.get(needed_url, timeout=10)
         json_contents = response.json()['_embedded']['restaurants']
 
         for j in range(len(json_contents)):
-            try :
+            try:
                 variable_createdate = datetime.utcfromtimestamp(json_contents[j]['createdDate'] / 1000)
                 variable_imagedate = datetime.utcfromtimestamp(json_contents[j]['firstImage']['createdDate'] / 1000)
 
@@ -57,7 +57,7 @@ def blueribbon_crawling():
                     json_contents[j]['firstImage']['createdDate'] = int(
                         str(variable_imagedate.year) + str(variable_imagedate.month) + str(variable_imagedate.day))
 
-            except :
+            except Exception:
                 pass
 
         # Like Human

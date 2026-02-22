@@ -57,7 +57,7 @@ for i in range(1,int(image_numbers.text)+1) :
         image_link = e.get_attribute("src")
         try :
             button_click = driver.find_element(By.XPATH, value='/html/body/main/div[5]/section/div/div/div/div/div/div[2]/div[2]').click()
-        except :
+        except Exception:
             pass
         image_list.append(image_link)
     driver.implicitly_wait(3)

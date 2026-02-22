@@ -14,7 +14,7 @@ def blueribbon_crawling():
     base_link = "https://www.bluer.co.kr/api/v1/restaurants?page=0"
     collected_data = list()
 
-    response = requests.get(base_link)
+    response = requests.get(base_link, timeout=10)
     json_contents = response.json()
 
     for h in trange(json_contents['page']['totalPages']):
@@ -23,7 +23,7 @@ def blueribbon_crawling():
         for i in range(len(json_contents)) :
             # 지정된 링크에서 json 형태로 내용 가져오기 (Getting contents as json format from link)
 
-            response = requests.get(needed_url)
+            response = requests.get(needed_url, timeout=10)
             json_contents = response.json()['_embedded']['restaurants']
 
             #필요한 데이터 변수
